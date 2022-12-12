@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "9613754599",
+    "project_id": "viverlocal-2365d",
+    "storage_bucket": "viverlocal-2365d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:9613754599:android:15756a74cb275b42a6e242",
+        "android_client_info": {
+          "package_name": "com.viverlocal.delivery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "9613754599-e4qu737r93bdf6v4b0pkhd2vsdion6i0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPLCNaTUzzzk7wCw0TTsX4RHruA-Ff1TI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "9613754599-e4qu737r93bdf6v4b0pkhd2vsdion6i0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "9613754599-ntsqpop4elk1gnlls8nhe961v9jdb038.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.viverlocal.delivery"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:9613754599:android:639de1fdbcabf8cda6e242",
+        "android_client_info": {
+          "package_name": "com.viverlocal.lojista"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "9613754599-e4qu737r93bdf6v4b0pkhd2vsdion6i0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPLCNaTUzzzk7wCw0TTsX4RHruA-Ff1TI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "9613754599-e4qu737r93bdf6v4b0pkhd2vsdion6i0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "9613754599-ntsqpop4elk1gnlls8nhe961v9jdb038.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.viverlocal.delivery"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
