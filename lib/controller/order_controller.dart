@@ -49,11 +49,14 @@ class OrderController extends GetxController implements GetxService {
   int get offset => _offset;
   String get orderType => _orderType;
   OrderModel get orderModel => _orderModel;
+  bool Loading = true;
 
   Future<void> getOrderDetails(int orderId) async{
     Response response = await orderRepo.getOrderWithId(orderId);
     if(response.statusCode == 200) {
       _orderModel = OrderModel.fromJson(response.body);
+      Loading = false;
+      print("this is order model"+"${_orderModel.delivered}");
     }else {
       ApiChecker.checkApi(response);
     }
