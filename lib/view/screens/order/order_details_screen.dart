@@ -338,7 +338,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen>
                                             ),
                                           ],
                                         ),
-
+                                       
                                         // Text(
                                         //   _order.paymentMethod ==
                                         //           'cash_on_delivery'
@@ -353,6 +353,70 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen>
                                         // ),
                                       ),
                                     ]),
+                                     Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                                'Payment Method Type : ',
+                                                style: robotoMedium),
+                                          ),
+                                          Expanded(
+                                            child: Text(_order
+                                                .cashOnDeliveryPaymentType.tr),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                                'Payment Method Name : ',
+                                                style: robotoMedium),
+                                          ),
+                                          Expanded(
+                                            child: Text(_order
+                                                .cashOnDeliveryPaymentMode.tr),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                              
+                                            'Payment Method Image : ',
+                                                style: robotoMedium),
+                                          ),
+                                          Expanded(
+                                            child: SizedBox(width: 50),
+                                          ),
+                                          Expanded(
+                                            child: Container(
+                                              height: 50,
+                                              width: 50,
+                                              // padding: EdgeInsets.all(10),
+                                              child: CustomImage(
+                                                image:
+                                                    '${_order.cashOnDeliveryPaymentImage}',
+                                                width: 50,
+                                                height: 50,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                     Divider(
                                         height: Dimensions.PADDING_SIZE_LARGE),
 
