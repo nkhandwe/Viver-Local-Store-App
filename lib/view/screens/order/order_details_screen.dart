@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:photo_view/photo_view.dart';
 import 'package:sixam_mart_store/controller/auth_controller.dart';
@@ -27,6 +28,7 @@ import 'package:sixam_mart_store/view/screens/order/widget/verify_delivery_sheet
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:dio/dio.dart';
 
 class OrderDetailsScreen extends StatefulWidget {
   final int orderId;
@@ -78,6 +80,38 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen>
     WidgetsBinding.instance.removeObserver(this);
 
     _timer.cancel();
+  }
+
+  
+  Future<void> downloadPdf(String url) async {
+    var dio = Dio();
+    // const String fileName = "tv.pdf";
+    // final dir = await getTemporaryDirectory();
+    //  Directory? _path = await getExternalStorageDirectory(); 
+    // String _localPath = _path!.path + Platform.pathSeparator + 'Download';
+    final savedDir = Directory('/storage/emulated/0/Download/ViverLocalStore/Order/order.png');
+    bool hasExisted = await savedDir.exists();
+    if (!hasExisted) {
+        savedDir.create();
+    }
+    //  path = _localPath;
+    String path = "/storage/emulated/0/Download/ViverLocalStore/Order/order.png";
+    await dio.download(
+      url,
+       path,
+      onReceiveProgress: (recivedBytes, totalBytes) {
+        print("${(recivedBytes / totalBytes)*100}");
+        //  progressValue.value = recivedBytes / totalBytes*100;
+        // print(progress);
+      },
+      deleteOnError: true,
+    ).then((_) {
+          //  progressValue.value=0.0;
+             Get.snackbar('Downloaded', "on /storage/emulated/0/Download/ViverLocalStore/Order/order.png",
+            backgroundColor: Color.fromARGB(255, 179, 165, 232),
+            colorText: Colors.black,
+            dismissDirection: DismissDirection.horizontal);
+    });
   }
 
   @override
@@ -177,10 +211,10 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen>
 
           _change_carry = double.parse(_order.cash_pay) - _total;
 
-          _cod_payment_method_name = _order.cod_payment_method_name;
-          _cod_payment_method_type_name = _order.cod_payment_method_type_name;
-          _cod_payment_method_image = _order.cod_payment_method_image;
-          _cash_pay = _order.cash_pay;
+          _cod_payment_method_name = (_order.cod_payment_method_name==null)?" ":_order.cod_payment_method_name;
+          _cod_payment_method_type_name = (_order.cod_payment_method_type_name==null)?" ":_order.cod_payment_method_type_name;
+          _cod_payment_method_image = (_order.cod_payment_method_image==null)?" ":_order.cod_payment_method_image;
+          _cash_pay = (_order.cash_pay==null)?" ":_order.cash_pay;
 
           return (orderController.orderDetailsModel != null &&
               _controllerOrderModer != null)
@@ -304,7 +338,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen>
                                             ),
                                           ],
                                         ),
-
+                                       
                                         // Text(
                                         //   _order.paymentMethod ==
                                         //           'cash_on_delivery'
@@ -319,6 +353,70 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen>
                                         // ),
                                       ),
                                     ]),
+                                     Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                                'Payment Method Type : ',
+                                                style: robotoMedium),
+                                          ),
+                                          Expanded(
+                                            child: Text(_order
+                                                .cashOnDeliveryPaymentType.tr),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                                'Payment Method Name : ',
+                                                style: robotoMedium),
+                                          ),
+                                          Expanded(
+                                            child: Text(_order
+                                                .cashOnDeliveryPaymentMode.tr),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                              
+                                            'Payment Method Image : ',
+                                                style: robotoMedium),
+                                          ),
+                                          Expanded(
+                                            child: SizedBox(width: 50),
+                                          ),
+                                          Expanded(
+                                            child: Container(
+                                              height: 50,
+                                              width: 50,
+                                              // padding: EdgeInsets.all(10),
+                                              child: CustomImage(
+                                                image:
+                                                    '${_order.cashOnDeliveryPaymentImage}',
+                                                width: 50,
+                                                height: 50,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                     Divider(
                                         height: Dimensions.PADDING_SIZE_LARGE),
 
@@ -370,6 +468,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen>
                                       itemCount: orderController
                                           .orderDetailsModel.length,
                                       itemBuilder: (context, index) {
+                                        print("order_detail Attachment "+"${ _order.orderAttachment}");
                                         return OrderItemWidget(
                                             order: _order,
                                             orderDetails: orderController
@@ -418,12 +517,11 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen>
                                         ])
                                         : SizedBox(),
 
-                                    (Get.find<SplashController>()
-                                        .getModule(_order.moduleType)
-                                        .orderAttachment &&
+                                    (
                                         _order.orderAttachment != null &&
                                         _order.orderAttachment.isNotEmpty)
-                                        ? Column(
+                                        ?
+                                         Column(
                                         crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                         children: [
@@ -445,6 +543,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen>
                                                     image:
                                                     '${Get.find<SplashController>().configModel.baseUrls.orderAttachmentUrl}/${_order.orderAttachment}',
                                                     width: 200,
+                                                    height: 200,
                                                   ),
                                                 )),
                                           ),
@@ -1369,6 +1468,14 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen>
                 splashRadius: 5,
                 onPressed: () => Get.back(),
                 icon: Icon(Icons.cancel, color: Colors.red),
+              )),
+               Positioned(
+              bottom: 0,
+              right: 0,
+              child: IconButton(
+                splashRadius: 5,
+                onPressed: () => {downloadPdf(imageUrl)},
+                icon: Icon(Icons.download, color: Colors.red,size: 30,),
               )),
         ]),
       );

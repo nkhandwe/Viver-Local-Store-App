@@ -78,6 +78,9 @@ class OrderModel {
   String cod_payment_method_type_name;
   String cod_payment_method_image;
   String cash_pay;
+    String cashOnDeliveryPaymentType;
+  String cashOnDeliveryPaymentMode;
+  String cashOnDeliveryPaymentImage;
 
   OrderModel(
       {this.id,
@@ -126,10 +129,16 @@ class OrderModel {
         this.cod_payment_method_type_name,
         this.cod_payment_method_image,
         this.cash_pay,
+         this.cashOnDeliveryPaymentType,
+        this.cashOnDeliveryPaymentMode,
+        this.cashOnDeliveryPaymentImage,
       });
 
   OrderModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+        cashOnDeliveryPaymentImage = json['cod_payment_method_image'];
+    cashOnDeliveryPaymentMode = json['cod_payment_method_name'];
+    cashOnDeliveryPaymentType = json['cod_payment_method_type_name'];
     orderAmount = json['order_amount'].toDouble();
     couponDiscountAmount = json['coupon_discount_amount'].toDouble();
     couponDiscountTitle = json['coupon_discount_title'];
@@ -236,6 +245,9 @@ class OrderModel {
     data['cod_payment_method_type_name'] = this.cod_payment_method_type_name;
     data['cod_payment_method_image'] = this.cod_payment_method_image;
     data['cash_pay'] = this.cash_pay;
+     data['cod_payment_method_image'] = this.cashOnDeliveryPaymentImage;
+    data['cod_payment_method_name'] = this.cashOnDeliveryPaymentType;
+    data['cod_payment_method_type_name'] = this.cashOnDeliveryPaymentMode;
 
     return data;
   }
